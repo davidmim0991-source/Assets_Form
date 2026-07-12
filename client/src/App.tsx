@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { FormValues, Palette, UploadCategory, UploadedFiles } from './types';
 import { EMPTY_FILES } from './types';
 import { loadDraft, clearDraft, useAutosave } from './hooks/useAutosave';
-import { submitOnboarding, extractErrorMessage } from './lib/api';
+import { submitOnboarding, extractErrorMessage, toDisplayError } from './lib/api';
 import ProgressBar from './components/ProgressBar';
 import StepBusinessDetails from './components/StepBusinessDetails';
 import StepUploads from './components/StepUploads';
@@ -85,6 +85,7 @@ export default function App() {
       setDone(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
+      console.error('Submission failed:', err);
       setSubmitError(extractErrorMessage(err));
     } finally {
       setSubmitting(false);
@@ -196,7 +197,7 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="mt-4 rounded-2xl border border-rose-100 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-600"
             >
-              {submitError}
+              {toDisplayError(submitError)}
             </motion.div>
           )}
         </AnimatePresence>

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { toDisplayError } from '../lib/api';
 
 interface Props {
   label: string;
@@ -33,7 +34,7 @@ export default function Field({ label, htmlFor, error, optional, children }: Pro
                 clipRule="evenodd"
               />
             </svg>
-            {error}
+            {toDisplayError(error)}
           </motion.p>
         )}
       </AnimatePresence>
