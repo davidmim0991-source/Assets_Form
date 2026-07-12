@@ -1,0 +1,31 @@
+import type { Palette } from '../types';
+
+/** All selectable color palettes (parsed from coolors.co CSS HEX exports). */
+export const PALETTES: Palette[] = [
+  { id: 'palette-1', colorNames: ['crimson violet', 'deep crimson', 'princeton orange', 'autumn leaf', 'dark teal'], colors: ['#5f0f40', '#9a031e', '#fb8b24', '#e36414', '#0f4c5c'] },
+  { id: 'palette-2', colorNames: ['graphite', 'stormy teal', 'white', 'alabaster grey', 'yale blue'], colors: ['#353535', '#3c6e71', '#ffffff', '#d9d9d9', '#284b63'] },
+  { id: 'palette-3', colorNames: ['graphite', 'jet black', 'golden bronze', 'alabaster grey', 'white'], colors: ['#363636', '#242f40', '#cca43b', '#e5e5e5', '#ffffff'] },
+  { id: 'palette-4', colorNames: ['taupe', 'grey olive', 'silver', 'parchment', 'powder blush'], colors: ['#463f3a', '#8a817c', '#bcb8b1', '#f4f3ee', '#e0afa0'] },
+  { id: 'palette-5', colorNames: ['azure mist', 'parchment', 'almond cream', 'almond silk', 'camel'], colors: ['#ecf8f8', '#eee4e1', '#e7d8c9', '#e6beae', '#b2967d'] },
+  { id: 'palette-6', colorNames: ['jet black', 'silver', 'white', 'coral glow', 'blue slate'], colors: ['#2d3142', '#bfc0c0', '#ffffff', '#ef8354', '#4f5d75'] },
+  { id: 'palette-7', colorNames: ['tea green', 'light green', 'medium jungle', 'turf green', 'pine teal', 'muted teal'], colors: ['#c8facd', '#5be584', '#00ab55', '#007b55', '#005249', '#75957b'] },
+  { id: 'palette-8', colorNames: ['steel blue', 'charcoal blue', 'white', 'lime moss', 'platinum'], colors: ['#1f7bcf', '#39485a', '#ffffff', '#85b245', '#ebeef0'] },
+  { id: 'palette-9', colorNames: ['punch red', 'honeydew', 'frosted blue', 'cerulean', 'oxford navy'], colors: ['#e63946', '#f1faee', '#a8dadc', '#457b9d', '#1d3557'] },
+  { id: 'palette-10', colorNames: ['dark slate grey', 'vanilla custard', 'honey bronze', 'brown red', 'night bordeaux'], colors: ['#335c67', '#fff3b0', '#e09f3e', '#9e2a2b', '#540b0e'] },
+  { id: 'palette-11', colorNames: ['ink black', 'prussian blue', 'regal navy', 'school bus yellow', 'gold'], colors: ['#000814', '#001d3d', '#003566', '#ffc300', '#ffd60a'] },
+  { id: 'palette-12', colorNames: ['neon pink', 'indigo bloom', 'vivid royal', 'electric sapphire', 'sky aqua'], colors: ['#f72585', '#7209b7', '#3a0ca3', '#4361ee', '#4cc9f0'] },
+  { id: 'palette-13', colorNames: ['charcoal blue', 'verdigris', 'tuscan sun', 'sandy brown', 'burnt peach'], colors: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51'] },
+  { id: 'palette-14', colorNames: ['space indigo', 'lavender grey', 'platinum', 'punch red', 'flag red'], colors: ['#2b2d42', '#8d99ae', '#edf2f4', '#ef233c', '#d90429'] },
+  { id: 'palette-15', colorNames: ['ink black', 'porcelain', 'light sea green', 'punch red', 'amber glow'], colors: ['#011627', '#fdfffc', '#2ec4b6', '#e71d36', '#ff9f1c'] },
+  { id: 'palette-16', colorNames: ['dark wine', 'camel', 'dark coffee', 'chocolate brown', 'light apricot'], colors: ['#6f1d1b', '#bb9457', '#432818', '#99582a', '#ffe6a7'] },
+  { id: 'palette-17', colorNames: ['alabaster grey', 'soft linen', 'tuscan sun', 'carbon black', 'graphite'], colors: ['#cfdbd5', '#e8eddf', '#f5cb5c', '#242423', '#333533'] },
+  { id: 'palette-18', colorNames: ['pacific blue', 'powder blue', 'lilac ash', 'thistle', 'pastel petal'], colors: ['#64a6bd', '#90a8c3', '#ada7c9', '#d7b9d5', '#f4cae0'] },
+  { id: 'palette-19', colorNames: ['dark amaranth', 'cream', 'sunlit clay', 'walnut', 'dark walnut'], colors: ['#6e0d25', '#ffffb3', '#dcab6b', '#774e24', '#6a381f'] },
+  { id: 'palette-20', colorNames: ['ivory mist', 'dust grey', 'dust grey 2', 'ash grey', 'grey olive'], colors: ['#f8f4e3', '#d4cdc3', '#d5d0cd', '#a2a392', '#9a998c'] },
+  { id: 'palette-21', colorNames: ['olive leaf', 'black forest', 'cornsilk', 'sunlit clay', 'copperwood'], colors: ['#606c38', '#283618', '#fefae0', '#dda15e', '#bc6c25'] },
+  { id: 'palette-22', colorNames: ['dark slate grey', 'stormy teal', 'powder petal', 'tomato jam', 'chestnut'], colors: ['#283d3b', '#197278', '#edddd4', '#c44536', '#772e25'] },
+  { id: 'palette-23', colorNames: ['jet black', 'jet black 2', 'dry sage', 'soft peach', 'tangerine dream'], colors: ['#202c39', '#283845', '#b8b08d', '#f2d492', '#f29559'] },
+  { id: 'palette-24', colorNames: ['porcelain', 'beige', 'palm leaf', 'carbon black', 'onyx'], colors: ['#f7f7f2', '#e4e6c3', '#899878', '#222725', '#121113'] },
+  { id: 'palette-25', colorNames: ['dark coffee', 'soft fawn', 'olive wood', 'olive bark', 'olive wood 2'], colors: ['#352208', '#e1bb80', '#7b6b43', '#685634', '#806443'] },
+  { id: 'palette-26', colorNames: ['golden bronze', 'palm leaf', 'fern', 'hunter green', 'evergreen'], colors: ['#b39c4d', '#768948', '#607744', '#34623f', '#1e2f23'] },
+];

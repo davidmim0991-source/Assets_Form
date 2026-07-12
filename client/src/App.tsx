@@ -93,16 +93,28 @@ export default function App() {
 
   const totalFiles = Object.values(files).reduce((sum, list) => sum + list.length, 0);
 
-  if (done) {
-    return (
-      <main className="flex min-h-screen items-center justify-center px-4 py-12">
-        <SuccessScreen />
-      </main>
-    );
-  }
-
   return (
-    <main className="mx-auto min-h-screen max-w-2xl px-4 py-8 sm:py-12">
+    <AnimatePresence mode="wait">
+      {done ? (
+        <motion.main
+          key="success"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35 }}
+          className="flex min-h-screen items-center justify-center px-4 py-12"
+        >
+          <SuccessScreen />
+        </motion.main>
+      ) : (
+        <motion.main
+          key="form"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="mx-auto min-h-screen max-w-2xl px-4 py-8 sm:py-12"
+        >
       {/* Intro header */}
       <motion.header
         initial={{ opacity: 0, y: -12 }}
@@ -263,6 +275,8 @@ export default function App() {
       <footer className="mt-10 text-center text-xs text-slate-400">
         הטופס נשמר אוטומטית - אפשר לחזור ולהשלים מאוחר יותר
       </footer>
-    </main>
+        </motion.main>
+      )}
+    </AnimatePresence>
   );
 }
