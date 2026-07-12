@@ -3,13 +3,26 @@ import type { FormValues, Palette, UploadedFiles } from '../types';
 
 /**
  * API client. In development the Vite proxy forwards /api to the Express
- * server; in production set VITE_API_URL to the deployed backend host only
- * (e.g. https://assetsform-production.up.railway.app — without a trailing /api).
+ * server; in production set VITE_API_URL to the deployed backend host
+ * (e.g. https://assetsform-production.up.railway.app — protocol required on Vercel).
  */
 function resolveApiBase(): string {
-  const raw = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '');
+  const input = (import.meta.env.VITE_API_URL || '').trim();
+  let raw = input.replace(/\/+$/, '');
+
   // Avoid /api/api/... when VITE_API_URL mistakenly includes /api.
-  if (raw.endsWith('/api')) return raw.slice(0, -4);
+  if (raw.endsWith('/api')) raw = raw.slice(0, -4);
+
+  // Bare hostnames (no protocol) are treated as relative paths by fetch/axios,
+  // e.g. vercel.app/my-api.com/api/... — always normalize to an absolute URL.
+  if (raw && !/^https?:\/\//i.test(raw) && !raw.startsWith('//')) {
+    raw = `https://${raw}`;
+  }
+
+  // #region agent log
+  fetch('http://127.0.0.1:7727/ingest/802820b2-e008-4064-9d3d-149fc94c133b',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'5e986e'},body:JSON.stringify({sessionId:'5e986e',location:'api.ts:resolveApiBase',message:'API base resolved',data:{input,resolved:raw},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
+  // #endregion
+
   return raw;
 }
 
@@ -84,7 +97,11 @@ export async function submitOnboarding(
   });
 
   try {
-    const res = await axios.post<SubmissionResponse>(`${API_BASE}/api/submissions`, formData, {
+    const submitUrl = `${API_BASE}/api/submissions`;
+    // #region agent log
+    fetch('http://127.0.0.1:7727/ingest/802820b2-e008-4064-9d3d-149fc94c133b',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'5e986e'},body:JSON.stringify({sessionId:'5e986e',location:'api.ts:submitOnboarding',message:'Submit URL constructed',data:{submitUrl,apiBase:API_BASE},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
+    // #endregion
+    const res = await axios.post<SubmissionResponse>(submitUrl, formData, {
       // Long timeout - video uploads over slow connections can take a while.
       timeout: 30 * 60 * 1000,
       onUploadProgress: (event) => {
@@ -140,4 +157,4 @@ export function extractErrorMessage(err: unknown): string {
   const fallback = toDisplayError(err);
   return fallback || 'אירעה שגיאה בשליחה. נסו שוב בעוד רגע.';
 }
-
+
