@@ -10,7 +10,7 @@ import { config } from '../config/env';
  * - Files are staged on disk (not RAM) so large uploads don't exhaust memory.
  * - Temp files get random names; the original name is only used (sanitized)
  *   when the file is sent to Google Drive.
- * - Per-file size limit enforced (default 100MB).
+ * - Per-file size limit enforced (default 500MB).
  * - Executable/script uploads are rejected.
  */
 

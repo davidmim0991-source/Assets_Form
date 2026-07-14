@@ -123,7 +123,7 @@ export async function submitOnboarding(
 export function extractErrorMessage(err: unknown): string {
   if (axios.isAxiosError(err)) {
     if (err.response?.status === 413) {
-      return 'אחד הקבצים גדול מדי (מקסימום 100MB לקובץ)';
+      return 'אחד הקבצים גדול מדי (מקסימום 500MB לקובץ)';
     }
 
     const data = err.response?.data;

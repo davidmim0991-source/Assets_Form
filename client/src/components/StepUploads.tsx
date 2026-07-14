@@ -61,7 +61,7 @@ export default function StepUploads({ register, errors, files, onFilesChange }: 
 
       <FileDropzone
         label="סרטונים"
-        hint="סרטונים של העסק (עד 100MB לקובץ)"
+        hint="סרטונים של העסק (עד 500MB לקובץ)"
         accept="video/*"
         files={files.videos}
         onChange={(f) => onFilesChange('videos', f)}

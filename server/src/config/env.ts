@@ -43,7 +43,7 @@ export const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
   allowedOrigin: process.env.ALLOWED_ORIGIN || 'http://localhost:5173',
   driveRootFolderId: required('DRIVE_ROOT_FOLDER_ID'),
-  maxUploadMb: parseInt(process.env.MAX_UPLOAD_MB || '100', 10),
+  maxUploadMb: parseInt(process.env.MAX_UPLOAD_MB || '500', 10),
   /**
    * Local file holding the selectable color palettes (.docx, .txt or .css
    * with coolors.co CSS exports). Defaults to "Color Combinations.docx" in

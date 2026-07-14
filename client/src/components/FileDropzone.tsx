@@ -15,7 +15,7 @@ function formatSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
 }
 
-const MAX_FILE_MB = 100;
+const MAX_FILE_MB = 500;
 
 /**
  * Drag & drop upload card with multiple files, image previews and
