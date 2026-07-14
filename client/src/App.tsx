@@ -9,6 +9,7 @@ import ProgressBar from './components/ProgressBar';
 import StepBusinessDetails from './components/StepBusinessDetails';
 import StepUploads from './components/StepUploads';
 import StepPalettes from './components/StepPalettes';
+import StepDesignStyle from './components/StepDesignStyle';
 import StepPageTypes from './components/StepPageTypes';
 import StepBranding from './components/StepBranding';
 import SuccessScreen from './components/SuccessScreen';
@@ -19,10 +20,11 @@ const STEP_FIELDS: Array<Array<keyof FormValues>> = [
   ['portfolioLink'],
   [],
   [],
+  [],
   ['existingWebsite'],
 ];
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 export default function App() {
   const [step, setStep] = useState(0);
@@ -30,6 +32,7 @@ export default function App() {
   const [files, setFiles] = useState<UploadedFiles>(EMPTY_FILES);
   const [selectedPalettes, setSelectedPalettes] = useState<Palette[]>([]);
   const [selectedPageTypes, setSelectedPageTypes] = useState<string[]>([]);
+  const [selectedDesignStyle, setSelectedDesignStyle] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -83,7 +86,14 @@ export default function App() {
     setSubmitError(null);
     setUploadProgress(0);
     try {
-      await submitOnboarding(values, files, selectedPalettes, selectedPageTypes, setUploadProgress);
+      await submitOnboarding(
+        values,
+        files,
+        selectedPalettes,
+        selectedPageTypes,
+        selectedDesignStyle,
+        setUploadProgress
+      );
       clearDraft();
       setDone(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -187,9 +197,12 @@ export default function App() {
                 <StepPalettes selected={selectedPalettes} onChange={setSelectedPalettes} />
               )}
               {step === 3 && (
+                <StepDesignStyle selected={selectedDesignStyle} onChange={setSelectedDesignStyle} />
+              )}
+              {step === 4 && (
                 <StepPageTypes selected={selectedPageTypes} onChange={setSelectedPageTypes} />
               )}
-              {step === 4 && <StepBranding register={register} errors={errors} />}
+              {step === 5 && <StepBranding register={register} errors={errors} />}
             </motion.div>
           </AnimatePresence>
         </div>

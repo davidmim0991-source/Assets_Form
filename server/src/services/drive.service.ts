@@ -78,6 +78,28 @@ export async function uploadFileFromDisk(
   return res.data.id!;
 }
 
+/** Creates a plain-text file in Drive. */
+export async function createTextFile(
+  name: string,
+  parentId: string,
+  content: string
+): Promise<string> {
+  const res = await withRetry(
+    () =>
+      drive.files.create({
+        ...DRIVE_FLAGS,
+        requestBody: { name, parents: [parentId], mimeType: 'text/plain' },
+        media: {
+          mimeType: 'text/plain',
+          body: content,
+        },
+        fields: 'id',
+      }),
+    { label: `create text file "${name}"` }
+  );
+  return res.data.id!;
+}
+
 /** Creates a JSON file in Drive from a plain object (pretty-printed). */
 export async function createJsonFile(
   name: string,

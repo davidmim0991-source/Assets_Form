@@ -25,6 +25,10 @@ export interface SubmissionData {
   selectedPalettes: SelectedPalette[];
   /** Website page types the client requested. */
   selectedPageTypes: string[];
+  /** Selected design style id (one of 12). */
+  designStyleId?: string;
+  /** Full design style text, word-for-word from the canonical list. */
+  designStyleText?: string;
 }
 
 /** Upload field names accepted by the API, mapped to Drive subfolders. */

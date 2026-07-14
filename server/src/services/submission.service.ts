@@ -9,7 +9,7 @@ import {
   UploadCategory,
 } from '../types';
 import { formatClientNumber, getNextClientNumber } from './counter.service';
-import { createFolder, createJsonFile, folderWebLink, uploadFileFromDisk } from './drive.service';
+import { createFolder, createJsonFile, createTextFile, folderWebLink, uploadFileFromDisk } from './drive.service';
 import { createClientInformationDoc } from './docs.service';
 import { sanitizeFilename, sanitizeFolderName } from '../utils/sanitize';
 
@@ -112,6 +112,9 @@ export async function processSubmission(
     aboutBusiness: data.aboutBusiness || null,
     additionalNotes: data.notes || null,
     requestedPages: data.selectedPageTypes,
+    designStyle: data.designStyleText
+      ? { id: data.designStyleId ?? null, text: data.designStyleText }
+      : null,
     uploadedFiles: uploadedManifest,
     drive: {
       clientFolderId,
@@ -120,6 +123,10 @@ export async function processSubmission(
     },
   };
   await createJsonFile('client.json', jsonFolderId, clientJson);
+
+  if (data.designStyleText) {
+    await createTextFile('design-style.txt', jsonFolderId, data.designStyleText);
+  }
 
   // 6. Human-readable Google Doc in the Client Information folder.
   await createClientInformationDoc(infoFolderId, data, clientNumber, submissionDate);

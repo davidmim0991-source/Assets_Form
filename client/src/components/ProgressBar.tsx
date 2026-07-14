@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-const STEPS = ['פרטי העסק', 'העלאת חומרים', 'צבעים', 'סוגי דפים', 'מיתוג'];
+const STEPS = ['פרטי העסק', 'העלאת חומרים', 'צבעים', 'סגנון', 'סוגי דפים', 'מיתוג'];
 
 interface Props {
   currentStep: number; // 0-based

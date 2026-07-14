@@ -3,6 +3,7 @@ import { SelectedPalette, SubmissionData } from '../types';
 import { processSubmission } from '../services/submission.service';
 import { collectFiles } from '../middleware/upload.middleware';
 import { HttpError } from '../middleware/error.middleware';
+import { getDesignStyleById } from '../data/designStyles';
 
 /**
  * Submission controller - validates input, delegates to the submission
@@ -57,6 +58,16 @@ function parseSubmissionData(raw: unknown): SubmissionData {
       .slice(0, 20);
   };
 
+  const designStyle = (): { id?: string; text?: string } => {
+    const id = typeof parsed.designStyleId === 'string' ? parsed.designStyleId.trim() : '';
+    if (!id) return {};
+    const style = getDesignStyleById(id);
+    if (!style) return {};
+    return { id: style.id, text: style.fullText };
+  };
+
+  const style = designStyle();
+
   const data: SubmissionData = {
     businessName: text('businessName'),
     email: text('email'),
@@ -74,6 +85,8 @@ function parseSubmissionData(raw: unknown): SubmissionData {
     aboutBusiness: text('aboutBusiness'),
     selectedPalettes: palettes(),
     selectedPageTypes: pageTypes(),
+    designStyleId: style.id,
+    designStyleText: style.text,
   };
 
   if (data.businessName === '') throw new HttpError(400, 'Business name is required');

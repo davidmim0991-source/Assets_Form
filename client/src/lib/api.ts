@@ -78,6 +78,7 @@ export async function submitOnboarding(
   files: UploadedFiles,
   selectedPalettes: Palette[],
   selectedPageTypes: string[],
+  designStyleId: string | null,
   onProgress: (percent: number) => void
 ): Promise<SubmissionResponse> {
   const formData = new FormData();
@@ -87,6 +88,7 @@ export async function submitOnboarding(
       ...values,
       selectedPalettes: selectedPalettes.map((p) => ({ id: p.id, colors: p.colors })),
       selectedPageTypes,
+      ...(designStyleId ? { designStyleId } : {}),
     })
   );
 
