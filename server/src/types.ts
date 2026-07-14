@@ -23,6 +23,8 @@ export interface SubmissionData {
   aboutBusiness?: string;
   /** 3-5 color palettes the client liked most. */
   selectedPalettes: SelectedPalette[];
+  /** Website page types the client requested. */
+  selectedPageTypes: string[];
 }
 
 /** Upload field names accepted by the API, mapped to Drive subfolders. */

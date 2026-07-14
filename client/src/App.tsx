@@ -9,6 +9,7 @@ import ProgressBar from './components/ProgressBar';
 import StepBusinessDetails from './components/StepBusinessDetails';
 import StepUploads from './components/StepUploads';
 import StepPalettes from './components/StepPalettes';
+import StepPageTypes from './components/StepPageTypes';
 import StepBranding from './components/StepBranding';
 import SuccessScreen from './components/SuccessScreen';
 
@@ -17,16 +18,18 @@ const STEP_FIELDS: Array<Array<keyof FormValues>> = [
   ['businessName', 'email', 'phone'],
   ['portfolioLink'],
   [],
+  [],
   ['existingWebsite'],
 ];
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 5;
 
 export default function App() {
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1); // 1 = forward, -1 = back
   const [files, setFiles] = useState<UploadedFiles>(EMPTY_FILES);
   const [selectedPalettes, setSelectedPalettes] = useState<Palette[]>([]);
+  const [selectedPageTypes, setSelectedPageTypes] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -80,7 +83,7 @@ export default function App() {
     setSubmitError(null);
     setUploadProgress(0);
     try {
-      await submitOnboarding(values, files, selectedPalettes, setUploadProgress);
+      await submitOnboarding(values, files, selectedPalettes, selectedPageTypes, setUploadProgress);
       clearDraft();
       setDone(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -183,7 +186,10 @@ export default function App() {
               {step === 2 && (
                 <StepPalettes selected={selectedPalettes} onChange={setSelectedPalettes} />
               )}
-              {step === 3 && <StepBranding register={register} errors={errors} />}
+              {step === 3 && (
+                <StepPageTypes selected={selectedPageTypes} onChange={setSelectedPageTypes} />
+              )}
+              {step === 4 && <StepBranding register={register} errors={errors} />}
             </motion.div>
           </AnimatePresence>
         </div>

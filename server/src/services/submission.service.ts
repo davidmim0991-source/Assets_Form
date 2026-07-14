@@ -10,7 +10,7 @@ import {
 } from '../types';
 import { formatClientNumber, getNextClientNumber } from './counter.service';
 import { createFolder, createJsonFile, folderWebLink, uploadFileFromDisk } from './drive.service';
-import { createClientInformationDoc } from './docs.service';
+import { createClientJsonDoc } from './docs.service';
 import { sanitizeFilename, sanitizeFolderName } from '../utils/sanitize';
 
 /**
@@ -22,7 +22,7 @@ import { sanitizeFilename, sanitizeFolderName } from '../utils/sanitize';
  *  3. Creates the full subfolder structure.
  *  4. Routes every uploaded file into the correct subfolder.
  *  5. Writes client.json (the source of truth for the AI Website Builder).
- *  6. Creates the formatted "Client Information" Google Doc.
+ *  6. Creates one Google Doc with the full JSON payload.
  */
 
 /** Fallback routing by MIME type for files whose category is unknown. */
@@ -110,6 +110,7 @@ export async function processSubmission(
     testimonialsText: data.testimonialsText || null,
     aboutBusiness: data.aboutBusiness || null,
     additionalNotes: data.notes || null,
+    requestedPages: data.selectedPageTypes,
     uploadedFiles: uploadedManifest,
     drive: {
       clientFolderId,
@@ -119,8 +120,8 @@ export async function processSubmission(
   };
   await createJsonFile('client.json', infoFolderId, clientJson);
 
-  // 6. Formatted Google Doc for humans.
-  await createClientInformationDoc(infoFolderId, data, clientNumber, submissionDate);
+  // 6. One consolidated Google Doc with the complete JSON (created last).
+  await createClientJsonDoc(infoFolderId, clientJson);
 
   return {
     clientNumber,

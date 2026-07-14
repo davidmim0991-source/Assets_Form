@@ -11,6 +11,7 @@ import { HttpError } from '../middleware/error.middleware';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_REGEX = /^[0-9+()\-\s]{8,20}$/;
+const VALID_PAGE_TYPES = new Set(['homepage', 'about', 'contact', 'faq', 'privacy', 'landing']);
 const MAX_TEXT_LENGTH = 5000;
 
 /** Parses and validates the JSON payload sent alongside the files. */
@@ -48,6 +49,14 @@ function parseSubmissionData(raw: unknown): SubmissionData {
       .filter((p): p is SelectedPalette => p !== null);
   };
 
+  const pageTypes = (): string[] => {
+    const raw = parsed.selectedPageTypes;
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .filter((p): p is string => typeof p === 'string' && VALID_PAGE_TYPES.has(p))
+      .slice(0, 20);
+  };
+
   const data: SubmissionData = {
     businessName: text('businessName'),
     email: text('email'),
@@ -64,6 +73,7 @@ function parseSubmissionData(raw: unknown): SubmissionData {
     notes: text('notes'),
     aboutBusiness: text('aboutBusiness'),
     selectedPalettes: palettes(),
+    selectedPageTypes: pageTypes(),
   };
 
   if (data.businessName === '') throw new HttpError(400, 'Business name is required');

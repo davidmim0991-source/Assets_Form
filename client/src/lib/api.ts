@@ -19,10 +19,6 @@ function resolveApiBase(): string {
     raw = `https://${raw}`;
   }
 
-  // #region agent log
-  fetch('http://127.0.0.1:7727/ingest/802820b2-e008-4064-9d3d-149fc94c133b',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'5e986e'},body:JSON.stringify({sessionId:'5e986e',location:'api.ts:resolveApiBase',message:'API base resolved',data:{input,resolved:raw},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
-  // #endregion
-
   return raw;
 }
 
@@ -81,6 +77,7 @@ export async function submitOnboarding(
   values: FormValues,
   files: UploadedFiles,
   selectedPalettes: Palette[],
+  selectedPageTypes: string[],
   onProgress: (percent: number) => void
 ): Promise<SubmissionResponse> {
   const formData = new FormData();
@@ -89,6 +86,7 @@ export async function submitOnboarding(
     JSON.stringify({
       ...values,
       selectedPalettes: selectedPalettes.map((p) => ({ id: p.id, colors: p.colors })),
+      selectedPageTypes,
     })
   );
 
@@ -97,11 +95,7 @@ export async function submitOnboarding(
   });
 
   try {
-    const submitUrl = `${API_BASE}/api/submissions`;
-    // #region agent log
-    fetch('http://127.0.0.1:7727/ingest/802820b2-e008-4064-9d3d-149fc94c133b',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'5e986e'},body:JSON.stringify({sessionId:'5e986e',location:'api.ts:submitOnboarding',message:'Submit URL constructed',data:{submitUrl,apiBase:API_BASE},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
-    // #endregion
-    const res = await axios.post<SubmissionResponse>(submitUrl, formData, {
+    const res = await axios.post<SubmissionResponse>(`${API_BASE}/api/submissions`, formData, {
       // Long timeout - video uploads over slow connections can take a while.
       timeout: 30 * 60 * 1000,
       onUploadProgress: (event) => {
