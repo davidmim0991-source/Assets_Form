@@ -32,6 +32,7 @@ export type UploadCategory = 'logo' | 'testimonials' | 'images' | 'videos' | 'do
 
 export const SUBFOLDER_NAMES = [
   'Client Information',
+  'JSON Data',
   'Logos',
   'Images',
   'Videos',

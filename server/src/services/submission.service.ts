@@ -10,7 +10,7 @@ import {
 } from '../types';
 import { formatClientNumber, getNextClientNumber } from './counter.service';
 import { createFolder, createJsonFile, folderWebLink, uploadFileFromDisk } from './drive.service';
-import { createClientJsonDoc } from './docs.service';
+import { createClientInformationDoc } from './docs.service';
 import { sanitizeFilename, sanitizeFolderName } from '../utils/sanitize';
 
 /**
@@ -21,8 +21,8 @@ import { sanitizeFilename, sanitizeFolderName } from '../utils/sanitize';
  *  2. Creates "<number> - <Business Name>" in the root Drive folder.
  *  3. Creates the full subfolder structure.
  *  4. Routes every uploaded file into the correct subfolder.
- *  5. Writes client.json (the source of truth for the AI Website Builder).
- *  6. Creates one Google Doc with the full JSON payload.
+ *  5. Writes client.json into the "JSON Data" subfolder.
+ *  6. Creates the human-readable "Client Information" Google Doc.
  */
 
 /** Fallback routing by MIME type for files whose category is unknown. */
@@ -81,8 +81,9 @@ export async function processSubmission(
 
   const submissionDate = new Date().toISOString();
   const infoFolderId = subfolderIds.get('Client Information')!;
+  const jsonFolderId = subfolderIds.get('JSON Data')!;
 
-  // 5. client.json - complete machine-readable record (source of truth).
+  // 5. client.json — complete machine-readable record in the JSON Data folder.
   const clientJson = {
     clientNumber,
     folderName,
@@ -118,10 +119,10 @@ export async function processSubmission(
       subfolders: Object.fromEntries(subfolderIds),
     },
   };
-  await createJsonFile('client.json', infoFolderId, clientJson);
+  await createJsonFile('client.json', jsonFolderId, clientJson);
 
-  // 6. One consolidated Google Doc with the complete JSON (created last).
-  await createClientJsonDoc(infoFolderId, clientJson);
+  // 6. Human-readable Google Doc in the Client Information folder.
+  await createClientInformationDoc(infoFolderId, data, clientNumber, submissionDate);
 
   return {
     clientNumber,
